@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <back-button></back-button>
+    </ion-buttons>
+
+    <ion-title>Comments</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="post-content">
+    <ion-item lines="none" no-padding>
+      <ion-avatar slot="start" (click)="goToProfile(post.author)">
+        <img src="{{ post.author.pictureUrl }}" />
+      </ion-avatar>
+
+      <p class="user-post-text">
+        <strong (click)="goToProfile(post.author)">{{
+          post.author.name
+        }}</strong>
+        {{ post.content }}
+      </p>
+    </ion-item>
+
+    <div class="border"></div>
+
+    <div class="comments-container">
+      <ion-item *ngFor="let comment of post.comments" no-padding lines="none">
+        <ion-avatar slot="start" (click)="goToProfile(comment.author)">
+          <img src="{{ comment.author.pictureUrl }}" />
+        </ion-avatar>
+
+        <p>
+          <strong (click)="goToProfile(comment.author)">{{
+            comment.author.name
+          }}</strong>
+          {{ comment.content }}
+        </p>
+
+        <ion-button
+          slot="end"
+          fill="clear"
+          (click)="commentHeartClick(comment)"
+        >
+          <ion-icon
+            *ngIf="!comment.isLiked"
+            slot="icon-only"
+            name="heart"
+          ></ion-icon>
+
+          <ion-icon
+            *ngIf="comment.isLiked"
+            slot="icon-only"
+            name="heart-red"
+          ></ion-icon>
+        </ion-button>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-item lines="none">
+    <ion-avatar slot="start">
+      <img src="{{ userService.mainUser.pictureUrl }}" />
+    </ion-avatar>
+
+    <ion-textarea
+      [(ngModel)]="commentContent"
+      rows="1"
+      placeholder="Add a comment"
+    ></ion-textarea>
+
+    <ion-icon slot="end" name="send" (click)="addComment()"></ion-icon>
+  </ion-item>
+</ion-footer>

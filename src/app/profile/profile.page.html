@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons *ngIf="!isCurrentUser" slot="start">
+      <back-button></back-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="settings"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content>
+  <ion-row>
+    <img padding class="round-image" src="{{ user.pictureUrl }}" />
+
+    <ion-row>
+      <ion-button *ngIf="isCurrentUser" class="plus-button" fill="clear">
+        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+      </ion-button>
+
+      <div class="header-div">
+        <p class="header-value">{{ orderedPosts.length }}</p>
+        <p>posts</p>
+      </div>
+
+      <div class="header-div">
+        <p class="header-value">{{ user.followersCount }}</p>
+        <p>followers</p>
+      </div>
+
+      <div class="header-div">
+        <p class="header-value">{{ user.followingCount }}</p>
+        <p>following</p>
+      </div>
+    </ion-row>
+
+    <ion-button *ngIf="isCurrentUser" fill="outline" class="profile-button">
+      Edit Profile
+    </ion-button>
+
+    <div *ngIf="!isCurrentUser">
+      <ion-button
+        *ngIf="!user.isFollowing"
+        fill="outline"
+        class="profile-button"
+        (click)="toggleFollow()"
+      >
+        Follow
+      </ion-button>
+
+      <ion-button
+        *ngIf="user.isFollowing"
+        class="profile-button unfollow"
+        (click)="toggleFollow()"
+      >
+        Unfollow
+      </ion-button>
+    </div>
+  </ion-row>
+
+  <ion-row>
+    <p class="profile-user-name">{{ user.name }}</p>
+    <p class="profile-user-description">{{ user.description }}</p>
+  </ion-row>
+
+  <ion-segment (ionChange)="segmentChanged($event)">
+    <ion-segment-button checked>
+      <ion-icon name="grid" value="grid"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button>
+      <ion-icon name="vertical-scroll" value="scroll"></ion-icon>
+    </ion-segment-button>
+
+    <ion-segment-button>
+      <ion-icon name="portrait-person" value="portrait"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="divider"></div>
+
+  <div>
+    <div class="segment-section" *ngIf="showGridPosts">
+      <posts-grid [posts]="orderedPosts"></posts-grid>
+    </div>
+
+    <div class="segment-section" *ngIf="showScrollPosts">
+      <posts-slider [posts]="orderedPosts"></posts-slider>
+    </div>
+
+    <div class="segment-section" *ngIf="showTagPosts">
+      <posts-grid [posts]="randomPosts"></posts-grid>
+    </div>
+  </div>
+</ion-content>

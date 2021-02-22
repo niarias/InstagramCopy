@@ -1,0 +1,161 @@
+<ion-card #card>
+  <ion-item class="post-header" lines="none">
+    <ion-avatar slot="start" (click)="goToProfile(post.author)">
+      <img src="{{ post.author.pictureUrl }}" />
+    </ion-avatar>
+
+    <ion-row>
+      <ion-col>
+        <ion-row>
+          <p class="user" (click)="goToProfile(post.author)">
+            {{ post.author.name }}
+          </p>
+        </ion-row>
+
+        <ion-row *ngIf="post.hasLocation">
+          <p class="location">{{ post.location }}</p>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-button slot="end" fill="clear" (click)="openPostActionSheet()">
+      <ion-icon slot="icon-only" name="more"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <figure>
+    <div>
+      <ion-button
+        *ngIf="post.pictureUrls.length > 1"
+        class="picture-index"
+        fill="clear"
+      >
+        {{ post.pictureIndex }}/{{ post.pictureUrls.length }}
+      </ion-button>
+
+      <ion-slides
+        #slides
+        [options]="slideOpts"
+        (ionSlideDidChange)="onSlideChange(post)"
+        (ionSlideDoubleTap)="postDoubleClick()"
+        pager="{{ post.pictureUrls.length > 1 }}"
+      >
+        <ion-slide *ngFor="let pictureUrl of post.pictureUrls">
+          <img class="post-picture" src="{{ pictureUrl }}" alt="" />
+        </ion-slide>
+      </ion-slides>
+
+      <ion-button class="heart-button" style="display: none" fill="clear">
+        <ion-icon slot="icon-only" name="heart-white"></ion-icon>
+      </ion-button>
+    </div>
+  </figure>
+
+  <ion-item no-padding class="post-buttons" lines="none">
+    <div slot="start">
+      <ion-button fill="clear" (click)="postHeartClick()">
+        <ion-icon
+          *ngIf="!post.isLiked"
+          slot="icon-only"
+          name="heart"
+        ></ion-icon>
+
+        <ion-icon
+          *ngIf="post.isLiked"
+          slot="icon-only"
+          name="heart-red"
+        ></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" (click)="showCommments()">
+        <ion-icon slot="icon-only" name="chat"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear" (click)="share()">
+        <ion-icon slot="icon-only" name="upload"></ion-icon>
+      </ion-button>
+    </div>
+
+    <ion-button slot="end" fill="clear">
+      <ion-icon slot="icon-only" name="bookmark"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <div class="post-content">
+    <p class="likes-count" *ngIf="post.likesCount > 0">
+      {{ post.likesCount }} likes
+    </p>
+
+    <p class="user-post-text">
+      <strong (click)="goToProfile(post.author)">{{ post.author.name }}</strong>
+      {{ post.content }}
+    </p>
+
+    <p
+      (click)="showCommments(post)"
+      *ngIf="post.comments.length > 2"
+      class="load-more-comments"
+    >
+      Load more comments
+    </p>
+
+    <!-- Showing last 2 comments only -->
+    <div *ngIf="post.comments.length > 0" class="comments-container">
+      <ion-item *ngIf="post.comments.length > 2" no-padding lines="none">
+        <p (click)="showCommments(post)">
+          <strong>{{
+            post.comments[post.comments.length - 2].author.name
+          }}</strong>
+          {{ post.comments[post.comments.length - 2].content }}
+        </p>
+
+        <ion-button
+          slot="end"
+          fill="clear"
+          (click)="commentHeartClick(post.comments[post.comments.length - 2])"
+        >
+          <ion-icon
+            *ngIf="!post.comments[post.comments.length - 2].isLiked"
+            slot="icon-only"
+            name="heart"
+          ></ion-icon>
+
+          <ion-icon
+            *ngIf="post.comments[post.comments.length - 2].isLiked"
+            slot="icon-only"
+            name="heart-red"
+          ></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-item *ngIf="post.comments.length > 1" no-padding lines="none">
+        <p (click)="showCommments(post)">
+          <strong>{{
+            post.comments[post.comments.length - 1].author.name
+          }}</strong>
+          {{ post.comments[post.comments.length - 1].content }}
+        </p>
+
+        <ion-button
+          slot="end"
+          fill="clear"
+          (click)="commentHeartClick(post.comments[post.comments.length - 1])"
+        >
+          <ion-icon
+            *ngIf="!post.comments[post.comments.length - 1].isLiked"
+            slot="icon-only"
+            name="heart"
+          ></ion-icon>
+
+          <ion-icon
+            *ngIf="post.comments[post.comments.length - 1].isLiked"
+            slot="icon-only"
+            name="heart-red"
+          ></ion-icon>
+        </ion-button>
+      </ion-item>
+    </div>
+
+    <p class="hours-ago">2 HOURS AGO</p>
+  </div>
+</ion-card>

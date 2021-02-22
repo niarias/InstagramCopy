@@ -1,0 +1,89 @@
+ion-toolbar {
+  ion-icon {
+    font-size: 22px;
+  }
+}
+
+.round-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+}
+
+.plus-button {
+  position: absolute;
+  z-index: 1000;
+  left: 45px;
+  top: 45px;
+  --color: var(--ion-color-primary);
+
+  ion-icon {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.header-div {
+  width: calc(33.3333333333333333333333333333333333333vw - 40px);
+  padding: 16px 0;
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    text-align: center;
+    color: #999;
+  }
+
+  .header-value {
+    color: #262626;
+    font-weight: 600;
+  }
+}
+
+.profile-button {
+  margin: 0;
+  height: 25px;
+  width: calc(100vw - 116px);
+  font-size: 14px;
+  position: absolute;
+  left: 100px;
+  top: 55px;
+  --border-color: black;
+  --background-activated: black;
+}
+
+.unfollow {
+  --color: white;
+}
+
+.profile-user-name {
+  font-size: 14px;
+  color: #262626;
+  font-weight: 600;
+  margin: 0 0 0 16px;
+  line-height: 20px;
+}
+
+.profile-user-description {
+  font-size: 13px;
+  color: #262626;
+  margin: 0 0 0 16px;
+}
+
+ion-segment {
+  margin-top: 20px;
+  --background-checked: transparent;
+  --color: #999;
+  --color-checked: var(--ion-color-primary);
+}
+
+ion-segment-button {
+  border: 0;
+  margin: 0 0 16px 0;
+  color: black;
+}
+
+.segment-section {
+  margin: 16px 0 0 0;
+  width: 100%;
+}

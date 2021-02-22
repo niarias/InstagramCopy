@@ -1,0 +1,9 @@
+<ion-header>
+  <ion-toolbar> <ion-searchbar> </ion-searchbar> </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let searchTile of searchTiles; let i = index">
+    <app-search-tiles [leftAlign]="i % 2 == 0"></app-search-tiles>
+  </div>
+</ion-content>

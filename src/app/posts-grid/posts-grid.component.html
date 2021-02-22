@@ -1,0 +1,11 @@
+<ion-grid class="three-col-grid">
+  <ion-row>
+    <div
+      (click)="goToPost(post)"
+      *ngFor="let post of posts"
+      class="oneThirdSquare"
+    >
+      <img src="{{ post.pictureUrls[0] }}" alt="" />
+    </div>
+  </ion-row>
+</ion-grid>

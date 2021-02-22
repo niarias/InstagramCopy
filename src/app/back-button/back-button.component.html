@@ -1,0 +1,4 @@
+<ion-button (click)="navCtrl.goBack()">
+  <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+  <p *ngIf="platform.is('ios')">Back</p>
+</ion-button>

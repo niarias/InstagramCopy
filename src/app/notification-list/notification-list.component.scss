@@ -1,0 +1,40 @@
+.multi-avatars {
+  margin-left: -12px;
+
+  ion-avatar {
+    height: 40px;
+    width: 40px;
+  }
+
+  .avatar-two {
+    margin-left: -20px;
+    margin-bottom: -20px;
+    border: 2px solid white;
+  }
+}
+
+.margin-left {
+  margin-left: 12px;
+}
+
+ion-row {
+  min-height: 60px;
+}
+
+.notification-content {
+  min-height: 60px;
+  z-index: 1000;
+
+  p {
+    font-size: 13px;
+  }
+
+  .time-ago {
+    color: lightgray;
+  }
+}
+
+.post-thumbnail {
+  height: 40px;
+  width: 40px;
+}

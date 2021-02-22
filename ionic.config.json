@@ -1,0 +1,7 @@
+{
+  "name": "InstagramCopy",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

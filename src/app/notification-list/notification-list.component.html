@@ -1,0 +1,121 @@
+<ion-list lines="none">
+  <ion-list-header>
+    <ion-label>{{ title }}</ion-label>
+  </ion-list-header>
+
+  <ion-item *ngFor="let notification of notifications">
+    <ion-row
+      (click)="goToLikes(notification)"
+      class="multi-avatars"
+      *ngIf="
+        notification.notificationType === 0 && notification.userLikes.length > 1
+      "
+      slot="start"
+      align-items-center
+    >
+      <ion-avatar class="avatar-one">
+        <img src="{{ notification.userLikes[0].pictureUrl }}" />
+      </ion-avatar>
+
+      <ion-avatar class="avatar-two">
+        <img src="{{ notification.userLikes[1].pictureUrl }}" />
+      </ion-avatar>
+    </ion-row>
+
+    <ion-avatar
+      *ngIf="
+        (notification.notificationType === 0 &&
+          notification.userLikes.length <= 1) ||
+        notification.notificationType !== 0
+      "
+      slot="start"
+      (click)="goToProfile(notification)"
+    >
+      <img src="{{ notification.avatar }}" />
+    </ion-avatar>
+
+    <div
+      class="notification-content"
+      [class.margin-left]="
+        (notification.notificationType === 0 &&
+          notification.userLikes.length <= 1) ||
+        notification.notificationType !== 0
+      "
+    >
+      <div *ngIf="notification.notificationType === 0">
+        <ion-row align-items-center *ngIf="notification.userLikes.length > 2">
+          <p>
+            <strong (click)="goToProfile(notification.userLikes[0])">{{
+              notification.userLikes[0].name
+            }}</strong
+            >,
+            <strong (click)="goToProfile(notification.userLikes[1])">{{
+              notification.userLikes[1].name
+            }}</strong>
+            and
+            <strong (click)="goToLikes(notification)"
+              >{{ notification.userLikes.length - 2 }} others</strong
+            >
+            liked your post. <span class="time-ago">&nbsp;2h</span>
+          </p>
+        </ion-row>
+
+        <ion-row align-items-center *ngIf="notification.userLikes.length == 2">
+          <p>
+            <strong (click)="goToProfile(notification.userLikes[0])">{{
+              notification.userLikes[0].name
+            }}</strong>
+            and
+            <strong (click)="goToProfile(notification.userLikes[1])">{{
+              notification.userLikes[1].name
+            }}</strong>
+            liked your post. <span class="time-ago">&nbsp;2h</span>
+          </p>
+        </ion-row>
+
+        <ion-row align-items-center *ngIf="notification.userLikes.length == 1">
+          <p>
+            <strong (click)="goToProfile(notification.userLikes[0])">{{
+              notification.userLikes[0].name
+            }}</strong>
+            liked your post. <span class="time-ago">&nbsp;2h</span>
+          </p>
+        </ion-row>
+      </div>
+
+      <div *ngIf="notification.notificationType === 1">
+        <ion-row align-items-center>
+          <p>
+            <strong (click)="goToProfile(notification.commentUser)">{{
+              notification.commentUser.name
+            }}</strong>
+            commented: "{{ notification.comment.content }}"
+            <span class="time-ago">&nbsp;2h</span>
+          </p>
+        </ion-row>
+      </div>
+
+      <div *ngIf="notification.notificationType === 2">
+        <ion-row align-items-center>
+          <p>
+            <strong (click)="goToProfile(notification.follower)">{{
+              notification.follower.name
+            }}</strong>
+            started following you. <span class="time-ago">&nbsp;2h</span>
+          </p>
+        </ion-row>
+      </div>
+    </div>
+
+    <img
+      slot="end"
+      *ngIf="
+        notification.notificationType === 0 ||
+        notification.notificationType === 1
+      "
+      class="post-thumbnail"
+      src="{{ notification.post.pictureUrls[0] }}"
+      (click)="goToPost(notification.post)"
+    />
+  </ion-item>
+</ion-list>
